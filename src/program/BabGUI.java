@@ -19,6 +19,7 @@ public class BabGUI extends javax.swing.JFrame implements EI.BBListener{
     public BabGUI() {
         initComponents();
         Bab.Jatek.addListener(this);
+        Bab.Jatek.Restart();
     }
 
     /**
@@ -53,6 +54,11 @@ public class BabGUI extends javax.swing.JFrame implements EI.BBListener{
         });
 
         Bt_vesz.setText("Vesz");
+        Bt_vesz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Bt_veszActionPerformed(evt);
+            }
+        });
 
         La_osszbab.setText("Babok");
 
@@ -143,6 +149,10 @@ public class BabGUI extends javax.swing.JFrame implements EI.BBListener{
         Bab.Jatek.Restart();
     }//GEN-LAST:event_Bt_ujrakezdActionPerformed
 
+    private void Bt_veszActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bt_veszActionPerformed
+        Bab.Jatek.actionJatekosLep((int)JSp_menny.getValue());
+    }//GEN-LAST:event_Bt_veszActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -193,13 +203,18 @@ public class BabGUI extends javax.swing.JFrame implements EI.BBListener{
 
     @Override
     public void adatFrissites() {
-        La_SignBabjai.setBackground(Color.red);
-        La_SignBabjaim.setBackground(Color.green);
+        int kijon = Bab.Jatek.kijon;
         
+        La_SignBabjai.setBackground(kijon == 1 ? Color.green : Color.red);
+        La_SignBabjaim.setBackground(kijon == 2 ? Color.green : Color.red);
+        La_babjai.setText(Bab.Jatek.getJatBabszam(1)+"");
+        La_babjaim.setText(Bab.Jatek.getJatBabszam(2)+"");
+        La_osszbab.setText(Bab.Jatek.getKozBabszam()+"");
     }
 
     @Override
     public void valakiNyert() {
-        La_kinyert.setText(Bab.Jatek.kinyert+"");
+        int nyert = Bab.Jatek.kinyert;
+        La_kinyert.setText(nyert > 0 && nyert > 1 ? nyert+". játékos nyert." : "Gép nyert.");
     }
 }
